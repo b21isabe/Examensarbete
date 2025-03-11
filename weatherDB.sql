@@ -210,3 +210,19 @@ SET
     atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
     ceiling = NULLIF(@ceiling, ''),
     station_id = 7156099999;
+    
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/london.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 3768399999;
