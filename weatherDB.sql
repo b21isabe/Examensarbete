@@ -33,13 +33,124 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
 (city_name,	latitude, longitude, station_name, station_id, elevation);
-    
 
-
-LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/beijingtest.csv'
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/krakow.csv'
 INTO TABLE weather_data
 FIELDS TERMINATED BY ','  
-LINES TERMINATED BY '\n'
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(TRIM(@ceiling), ''),
+    station_id = 12566099999;
+
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/berlin.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 10385099999;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/sydney.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 94767099999;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/pittsburgh.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 72520094823;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/san-francisco.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 72494023234;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/buffalo.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 72528014733;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/toronto.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 71624099999;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/beijing.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES
 (observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
 SET 
@@ -51,4 +162,51 @@ SET
     atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
     ceiling = NULLIF(@ceiling, ''),
     station_id = 54511099999;
-    
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/cairo.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 62366099999;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/madrid.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 8221099999;
+
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/paris.csv'
+INTO TABLE weather_data
+FIELDS TERMINATED BY ','  
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES
+(observation_time, @wind_direction, @wind_speed, @visibility, @temperature, @dew_point, @atmospheric_pressure, @ceiling)
+SET 
+    wind_direction = NULLIF(@wind_direction, ''),
+    wind_speed = NULLIF(@wind_speed, ''),
+    visibility = NULLIF(@visibility, ''),
+    temperature = NULLIF(@temperature, ''),
+    dew_point = NULLIF(@dew_point, ''),
+    atmospheric_pressure = NULLIF(@atmospheric_pressure, ''),
+    ceiling = NULLIF(@ceiling, ''),
+    station_id = 7156099999;
