@@ -2,12 +2,14 @@ require("dotenv").config();
 const express = require("express");
 const db = require("./db");
 const citiesRoutes = require("./routes/cities");
+const weatherRoutes = require("./routes/weatherdata");
 
 const app = express();
 const port = 3000;
 
 app.use(express.json()); 
 app.use("/cities", citiesRoutes);
+app.use("/weatherdata", weatherRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
