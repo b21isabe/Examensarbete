@@ -9,9 +9,14 @@ router.get("/", (req, res) => {
     const parsedDays = parseInt(days, 10);
 
     const query = `
-        SELECT * FROM weather_data
-        WHERE station_id = ? AND observation_time >= ? AND observation_time < DATE_ADD(?, INTERVAL ? DAY);
-        `;
+    SELECT station_id, 
+    DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
+    wind_direction, wind_speed, visibility, temperature, dew_point, atmospheric_pressure, ceiling
+    FROM weather_data 
+    WHERE station_id = ? 
+    AND observation_time >= ? 
+    AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
+    `;
     
 
     db.query(query,[parsedStationId, start_date, start_date, parsedDays], (err, results) => {
