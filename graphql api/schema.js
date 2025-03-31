@@ -46,11 +46,22 @@ const RootQuery = new GraphQLObjectType({
         },
         weather: {
             type: new GraphQLList(WeatherType),
-            args: { station_id: { type: GraphQLString } },
-            resolve: async (_, { station_id }) => {
+            args: { 
+                station_id: { type: GraphQLString },
+                start_date: { type: GraphQLString },
+                days: { type: GraphQLInt},
+            },
+            resolve: async (_, { station_id, start_date, days }) => {
                 try {
                     const connection = await db.getConnection();
-                    const [rows] = await connection.query("SELECT * FROM weather_data WHERE station_id = ?", [station_id]);
+                    const query = `
+                    SELECT * FROM weather_data 
+                    WHERE station_id = ? 
+                    AND observation_time >= ? 
+                    AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
+                    ORDER BY observation_time ASC;
+                `;
+                    const [rows] = await connection.query(query, [station_id, start_date, start_date, days]);
                     connection.release();
                     return rows;
                 } catch (err) {
