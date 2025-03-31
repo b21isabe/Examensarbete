@@ -55,12 +55,14 @@ const RootQuery = new GraphQLObjectType({
                 try {
                     const connection = await db.getConnection();
                     const query = `
-                    SELECT * FROM weather_data 
+                    SELECT station_id, 
+                    DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
+                    wind_direction, wind_speed, visibility, temperature, dew_point, atmospheric_pressure, ceiling
+                    FROM weather_data 
                     WHERE station_id = ? 
                     AND observation_time >= ? 
                     AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
-                    ORDER BY observation_time ASC;
-                `;
+                    `;
                     const [rows] = await connection.query(query, [station_id, start_date, start_date, days]);
                     connection.release();
                     return rows;
