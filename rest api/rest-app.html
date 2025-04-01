@@ -1,0 +1,56 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>rest-app</title>
+</head>
+<script>
+    async function getWeatherData()
+		{
+			const station_id = document.getElementById("city").value;
+			const start_date = document.getElementById("start_date").value;
+			const days = document.getElementById("days").value;
+
+            const url = `http://localhost:3000/weatherdata?station_id=${station_id}&start_date=${start_date}&days=${days}`;
+
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+
+                const json = await response.json();
+                console.log(json);
+            } catch (error) {
+                console.error(error.message);
+            }
+}
+
+</script>
+
+<body>
+
+	<div>
+		<h2>Weather-search</h2>
+
+		<form method='POST'>
+            <select id="city" name="city">
+                <option value="3768399999">London </option>
+                <option value="7156099999">Paris</option>
+                <option value="8221099999">Madrid</option>
+                <option value="10385099999">Berlin</option>
+                <option value="12566099999">Krakow</option>
+                <option value="54511099999">Beijing</option>
+                <option value="62366099999">Cairo</option>
+                <option value="71624099999">Toronto</option>
+                <option value="72494023234">San Francisco</option>
+                <option value="72520094823">Pittsburgh</option>
+                <option value="72528014733">Buffalo</option>
+                <option value="94767099999">Sydney</option>
+            </select>
+            <input type="date" id="start_date" name="start_date" value="2014-01-01" min="2014-01-01" max="2024-01-01"/>
+            <input type="number" id="days" name="days" value="100">
+            <button type="button" onclick="getWeatherData()">Fetch Weather Data</button>
+        </form>
+	</div>
+</body>
+</html>
