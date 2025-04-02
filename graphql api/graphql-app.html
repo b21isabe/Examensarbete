@@ -4,15 +4,13 @@
     <title>rest-app</title>
 </head>
 <script>
-    async function getWeatherData()
-		{
-			const station_id = document.getElementById("city").value;
-			const start_date = document.getElementById("start_date").value;
-			const days = document.getElementById("days").value;
+    async function getWeatherData(){
+	    const station_id = document.getElementById("city").value;
+		const start_date = document.getElementById("start_date").value;
+		const days = document.getElementById("days").value;
 
-            let results = await fetch('http://localhost:3000/graphql', {
+        let results = await fetch('http://localhost:3000/graphql', {
             method: 'POST',
-
             headers: {
                 "Content-Type": "application/json"
             },
@@ -32,16 +30,15 @@
                     }  
                 }`
             })
-    })
-    let characters = await results.json();
-    console.log(characters.data)
-}
+        })
+        let characters = await results.json();
+        console.log(characters.data)
+    }
 </script>
 
 <body>
 	<div>
 		<h2>Weather-search with GraphQL</h2>
-
 		<form method='POST'>
             <select id="city" name="city">
                 <option value="3768399999">London </option>
