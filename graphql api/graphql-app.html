@@ -1,10 +1,11 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>rest-app</title>
+    <title>GraphQL-app</title>
 </head>
 <script>
     async function getWeatherData(){
+        const weatherTable = document.getElementById("weatherTable")
 	    const station_id = document.getElementById("city").value;
 		const start_date = document.getElementById("start_date").value;
 		const days = document.getElementById("days").value;
@@ -31,8 +32,24 @@
                 }`
             })
         })
-        let characters = await results.json();
-        console.log(characters.data)
+        let json = await results.json();
+        //console.log(json.data)
+
+        let output =``;
+        json.data.weather.forEach(element => {
+            output +=`<tr>`;
+            output +=	`<td>${element.station_id}</td>`;
+		    output +=	`<td>${element.observation_time}</td>`;
+            output +=	`<td>${element.wind_direction}</td>`;
+            output +=	`<td>${element.wind_speed}</td>`;
+            output +=	`<td>${element.visibility}</td>`;
+            output +=	`<td>${element.temperature}</td>`;
+            output +=	`<td>${element.dew_point}</td>`;
+            output +=	`<td>${element.atmospheric_pressure}</td>`;
+            output +=	`<td>${element.ceiling}</td>`;
+			output +=`</tr>`;                
+        });
+        weatherTable.innerHTML = output;
     }
 </script>
 
@@ -59,5 +76,23 @@
             <button type="button" onclick="getWeatherData()">Fetch Weather Data</button>
         </form>
 	</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Station ID</th>
+                <th>Observation Time</th>
+                <th>Wind Direction</th>
+                <th>Wind Speed</th>
+                <th>Visibility</th>
+                <th>Temperature</th>
+                <th>Dew Point</th>
+                <th>Pressure</th>
+                <th>Ceiling</th>
+            </tr>
+        </thead>
+        <tbody id="weatherTable">
+        </tbody>
+    </table>
+    
 </body>
 </html>
