@@ -33,6 +33,24 @@
             })
         })
         let json = await results.json();
+
+        //measures the time and stores in csv format, this is done together with a tampermonkey script
+        let endTime = performance.timeOrigin + performance.now();
+
+        let startTime = parseInt(localStorage.getItem('startTime'));
+        localStorage.removeItem('startTime')
+        let elapsedTime = endTime - startTime;
+
+        let currentCity = localStorage.getItem('currentCity');
+        localStorage.removeItem('currentCity');
+
+        let currentDate= localStorage.getItem('currentDate');
+        localStorage.removeItem('currentDate');
+
+        let csvData = localStorage.getItem('csvData');
+        csvData += currentCity + "," + currentDate + "," + elapsedTime + "," + startTime + "," + endTime + "\n";
+        localStorage.setItem("csvData",csvData);
+
         //console.log(json.data)
 
         let output =``;
