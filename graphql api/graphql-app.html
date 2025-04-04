@@ -37,18 +37,18 @@
 
         let output =``;
         json.data.weather.forEach(element => {
-            output +=`<tr>`;
-            output +=	`<td>${element.station_id}</td>`;
-		    output +=	`<td>${element.observation_time}</td>`;
-            output +=	`<td>${element.wind_direction}</td>`;
-            output +=	`<td>${element.wind_speed}</td>`;
-            output +=	`<td>${element.visibility}</td>`;
-            output +=	`<td>${element.temperature}</td>`;
-            output +=	`<td>${element.dew_point}</td>`;
-            output +=	`<td>${element.atmospheric_pressure}</td>`;
-            output +=	`<td>${element.ceiling}</td>`;
-			output +=`</tr>`;                
-        });
+            output +=`<tr>
+                    <td>${element.station_id}</td>
+			        <td>${element.observation_time}</td>
+                    <td>${element.wind_direction}</td>
+                    <td>${element.wind_speed}</td>
+                    <td>${element.visibility}</td>
+                    <td>${element.temperature}</td>
+                    <td>${element.dew_point}</td>
+                    <td>${element.atmospheric_pressure}</td>
+                    <td>${element.ceiling}</td>
+			    </tr>`;                
+            });
         weatherTable.innerHTML = output;
     }
 </script>
