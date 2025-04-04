@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name      SearchGraphQL
-// @namespace Rest
+// @namespace GraphQL
 // @match     file:///C:/Users/Isak/Documents/GitHub/Examensarbete/graphql%20api/graphql-app.html
 // @version   1
 // @grant     none
