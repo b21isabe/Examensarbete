@@ -18,16 +18,34 @@ const WeatherType = new GraphQLObjectType({
     fields: () => ({
         station_id: { type: GraphQLString },
         observation_time: { type: GraphQLString },
-        wind_direction:  { type: GraphQLInt },
+        wind_direction: { type: GraphQLInt },
         wind_speed: { type: GraphQLString },
         visibility: { type: GraphQLInt },
         temperature: { type: GraphQLString },
         dew_point: { type: GraphQLString },
         atmospheric_pressure: { type: GraphQLString },
-        ceiling:  { type: GraphQLInt },
+        ceiling: { type: GraphQLInt },
+
+        city: {
+            type: CityType,
+            resolve: async (parent) => {
+                try {
+                    const connection = await db.getConnection();
+                    const [rows] = await connection.query(
+                        "SELECT * FROM cities WHERE station_id = ?",
+                        [parent.station_id]
+                    );
+                    connection.release();
+                    return rows[0];
+                } catch (err) {
+                    throw new Error("Database error: " + err.message);
+                }
+            }
+        }
     })
 });
 
+// Root Query
 const RootQuery = new GraphQLObjectType({
     name: "RootQueryType",
     fields: {
@@ -49,19 +67,19 @@ const RootQuery = new GraphQLObjectType({
             args: { 
                 station_id: { type: GraphQLString },
                 start_date: { type: GraphQLString },
-                days: { type: GraphQLInt},
+                days: { type: GraphQLInt }
             },
             resolve: async (_, { station_id, start_date, days }) => {
                 try {
                     const connection = await db.getConnection();
                     const query = `
-                    SELECT station_id, 
-                    DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
-                    wind_direction, wind_speed, visibility, temperature, dew_point, atmospheric_pressure, ceiling
-                    FROM weather_data 
-                    WHERE station_id = ? 
-                    AND observation_time >= ? 
-                    AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
+                        SELECT station_id, 
+                               DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
+                               wind_direction, wind_speed, visibility, temperature, dew_point, atmospheric_pressure, ceiling
+                        FROM weather_data 
+                        WHERE station_id = ? 
+                        AND observation_time >= ? 
+                        AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
                     `;
                     const [rows] = await connection.query(query, [station_id, start_date, start_date, days]);
                     connection.release();
