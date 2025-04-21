@@ -1,0 +1,124 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>GraphQL-app</title>
+</head>
+<script>
+    async function getWeatherData(){
+        const weatherTable = document.getElementById("weatherTable")
+	    const station_id = document.getElementById("city").value;
+		const start_date = document.getElementById("start_date").value;
+		const days = document.getElementById("days").value;
+
+        let results = await fetch('http://localhost:3000/graphql', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                query: `{
+                    weather(station_id: "${station_id}", start_date: "${start_date}", days: ${days}) {
+                        station_id
+                        observation_time
+                        wind_direction
+                        wind_speed
+                        visibility
+                        temperature
+                        dew_point
+                        atmospheric_pressure
+                        ceiling
+                        city {
+                            city_name
+                            station_name
+                        }
+                    }  
+                }`
+            })
+        })
+        let json = await results.json();
+
+        //measures the time and stores in csv format, this is done together with a tampermonkey script
+        let endTime = performance.timeOrigin + performance.now();
+
+        let startTime = parseInt(localStorage.getItem('startTime'));
+        localStorage.removeItem('startTime')
+        let elapsedTime = endTime - startTime;
+
+        let currentCity = localStorage.getItem('currentCity');
+        localStorage.removeItem('currentCity');
+
+        let currentDate= localStorage.getItem('currentDate');
+        localStorage.removeItem('currentDate');
+
+        let csvData = localStorage.getItem('csvData');
+        csvData += currentCity + "," + currentDate + "," + elapsedTime + "," + startTime + "," + endTime + "\n";
+        localStorage.setItem("csvData",csvData);
+
+        //console.log(json.data)
+
+        let output =``;
+        json.data.weather.forEach(element => {
+            output +=`<tr>
+                    <td>${element.station_id}</td>
+			        <td>${element.observation_time}</td>
+                    <td>${element.wind_direction}</td>
+                    <td>${element.wind_speed}</td>
+                    <td>${element.visibility}</td>
+                    <td>${element.temperature}</td>
+                    <td>${element.dew_point}</td>
+                    <td>${element.atmospheric_pressure}</td>
+                    <td>${element.ceiling}</td>
+                    <td>${element.city ? element.city.city_name : ''}</td>
+                    <td>${element.city ? element.city.station_name : ''}</td>
+			    </tr>`;                
+            });
+        weatherTable.innerHTML = output;
+    }
+</script>
+
+<body>
+	<div>
+		<h2>Weather-search with GraphQL</h2>
+		<form method='POST'>
+            <select id="city" name="city">
+                <option value="3768399999">London </option>
+                <option value="7156099999">Paris</option>
+                <option value="8221099999">Madrid</option>
+                <option value="10385099999">Berlin</option>
+                <option value="12566099999">Krakow</option>
+                <option value="54511099999">Beijing</option>
+                <option value="62366099999">Cairo</option>
+                <option value="71624099999">Toronto</option>
+                <option value="72494023234">San Francisco</option>
+                <option value="72520094823">Pittsburgh</option>
+                <option value="72528014733">Buffalo</option>
+                <option value="94767099999">Sydney</option>
+            </select>
+            <input type="date" id="start_date" name="start_date" value="2014-01-01" min="2014-01-01" max="2024-01-01"/>
+            <input type="number" id="days" name="days" value="100">
+            <button type="button" id="fetchDataBtn" onclick="getWeatherData()">Fetch Weather Data</button>
+        </form>
+	</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Station ID</th>
+                <th>Observation Time</th>
+                <th>Wind Direction</th>
+                <th>Wind Speed</th>
+                <th>Visibility</th>
+                <th>Temperature</th>
+                <th>Dew Point</th>
+                <th>Pressure</th>
+                <th>Ceiling</th>
+                <th>City Name</th>
+                <th>Station Name</th>
+            </tr>
+        </thead>
+        <tbody id="weatherTable">
+        </tbody>
+    </table>
+    
+</body>
+</html>
