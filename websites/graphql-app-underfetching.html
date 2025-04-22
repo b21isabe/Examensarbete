@@ -28,10 +28,8 @@
                         dew_point
                         atmospheric_pressure
                         ceiling
-                        city {
-                            city_name
-                            station_name
-                        }
+                        city_name
+                        station_name
                     }  
                 }`
             })
@@ -69,8 +67,8 @@
                     <td>${element.dew_point}</td>
                     <td>${element.atmospheric_pressure}</td>
                     <td>${element.ceiling}</td>
-                    <td>${element.city ? element.city.city_name : ''}</td>
-                    <td>${element.city ? element.city.station_name : ''}</td>
+                    <td>${element.city_name}</td>
+                    <td>${element.station_name}</td>
 			    </tr>`;                
             });
         weatherTable.innerHTML = output;

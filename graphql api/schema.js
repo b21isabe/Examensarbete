@@ -26,26 +26,11 @@ const WeatherType = new GraphQLObjectType({
         atmospheric_pressure: { type: GraphQLString },
         ceiling: { type: GraphQLInt },
 
-        city: {
-            type: CityType,
-            resolve: async (parent) => {
-                try {
-                    const connection = await db.getConnection();
-                    const [rows] = await connection.query(
-                        "SELECT * FROM cities WHERE station_id = ?",
-                        [parent.station_id]
-                    );
-                    connection.release();
-                    return rows[0];
-                } catch (err) {
-                    throw new Error("Database error: " + err.message);
-                }
-            }
-        }
+        city_name: { type: GraphQLString },
+        station_name: { type: GraphQLString },
     })
 });
 
-// Root Query
 const RootQuery = new GraphQLObjectType({
     name: "RootQueryType",
     fields: {
@@ -73,13 +58,16 @@ const RootQuery = new GraphQLObjectType({
                 try {
                     const connection = await db.getConnection();
                     const query = `
-                        SELECT station_id, 
-                               DATE_FORMAT(observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
-                               wind_direction, wind_speed, visibility, temperature, dew_point, atmospheric_pressure, ceiling
-                        FROM weather_data 
-                        WHERE station_id = ? 
-                        AND observation_time >= ? 
-                        AND observation_time < DATE_ADD(?, INTERVAL ? DAY)
+                        SELECT weather_data.station_id, 
+                               DATE_FORMAT(weather_data.observation_time, '%Y-%m-%d %H:%i:%s') AS observation_time, 
+                               weather_data.wind_direction, weather_data.wind_speed, weather_data.visibility, weather_data.temperature, 
+                               weather_data.dew_point, weather_data.atmospheric_pressure, weather_data.ceiling,
+                               cities.city_name, cities.station_name
+                        FROM weather_data
+                        JOIN cities ON weather_data.station_id = cities.station_id
+                        WHERE weather_data.station_id = ? 
+                        AND weather_data.observation_time >= ? 
+                        AND weather_data.observation_time < DATE_ADD(?, INTERVAL ? DAY)
                     `;
                     const [rows] = await connection.query(query, [station_id, start_date, start_date, days]);
                     connection.release();
