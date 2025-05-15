@@ -10,6 +10,9 @@
 		const start_date = document.getElementById("start_date").value;
 		const days = document.getElementById("days").value;
 
+        //take the time and store it and then start the search
+        let startTime = performance.timeOrigin + performance.now();
+
         let results = await fetch('http://localhost:3000/graphql', {
             method: 'POST',
             headers: {
@@ -39,8 +42,6 @@
         //measures the time and stores in csv format, this is done together with a tampermonkey script
         let endTime = performance.timeOrigin + performance.now();
 
-        let startTime = parseInt(localStorage.getItem('startTime'));
-        localStorage.removeItem('startTime')
         let elapsedTime = endTime - startTime;
 
         let currentCity = localStorage.getItem('currentCity');
@@ -55,7 +56,7 @@
 
         //console.log(json.data)
 
-        let output =``;
+        /*let output =``;
         json.data.weather.forEach(element => {
             output +=`<tr>
                     <td>${element.station_id}</td>
@@ -71,7 +72,7 @@
                     <td>${element.station_name}</td>
 			    </tr>`;                
             });
-        weatherTable.innerHTML = output;
+        weatherTable.innerHTML = output;*/
     }
 </script>
 

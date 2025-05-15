@@ -10,6 +10,9 @@
 		const start_date = document.getElementById("start_date").value;
 		const days = document.getElementById("days").value;
 
+        //take the time and store it and then start the search
+        let startTime = performance.timeOrigin + performance.now();
+
         const url = `http://localhost:3000/weatherdata?station_id=${station_id}&start_date=${start_date}&days=${days}`;
 
         try {
@@ -23,8 +26,6 @@
             //measures the time and stores in csv format, this is done together with a tampermonkey script
             let endTime = performance.timeOrigin + performance.now();
 
-            let startTime = parseInt(localStorage.getItem('startTime'));
-            localStorage.removeItem('startTime')
             let elapsedTime = endTime - startTime;
 
             let currentCity = localStorage.getItem('currentCity');
@@ -40,7 +41,7 @@
             //console.log(json);
 
             //writes out the data in a table
-            let output =``;
+            /*let output =``;
             json.forEach(element => {
                 output +=`<tr>
                     <td>${element.station_id}</td>
@@ -54,7 +55,7 @@
                     <td>${element.ceiling}</td>
 			    </tr>`;                
             });
-            weatherTable.innerHTML = output;
+            weatherTable.innerHTML = output;*/
         } catch (error) {
             console.error(error.message);
         }
