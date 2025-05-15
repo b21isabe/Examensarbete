@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name      SearchRest
+// @name      SearchRestUnderfetching
 // @namespace Rest
-// @match        file:///C:/Users/Isak/Documents/GitHub/Examensarbete/websites/rest-app.html
+// @match        file:///C:/Users/Isak/Documents/GitHub/Examensarbete/websites/rest-app-underfetching.html
 // @version   1
 // @grant     none
 // @require   https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js
@@ -41,7 +41,6 @@ function Search(){
             console.log("Searches complete.");
             return;
         }
-
     Math.setSeed(parseInt(seed));
 
     //pick a random city and date
@@ -51,7 +50,7 @@ function Search(){
     seed++;
 
     //input the city and date
-    $('#city').val(randomCityId);
+    $('#city').val(randomCityName);
     $('#start_date').val(randomDate.toISOString().split('T')[0]);
 
     //store city/date in local storage

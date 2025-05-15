@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name      SearchGraphQL
-// @namespace GraphQL
+// @namespace Rest
 // @match     file:///C:/Users/Isak/Documents/GitHub/Examensarbete/websites/graphql-app.html
+// @match     file:///C:/Users/Isak/Documents/GitHub/Examensarbete/websites/graphql-app-underfetching.html
 // @version   1
 // @grant     none
 // @require   https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js
@@ -58,14 +59,11 @@ function Search(){
     localStorage.setItem('currentCity',randomCityName);
     localStorage.setItem('currentDate',randomDate.toISOString().split('T')[0]);
 
-    //take the time and store it and then start the search
-    let startTime = performance.timeOrigin + performance.now();
-    localStorage.setItem('startTime', startTime);
     $('#fetchDataBtn').click();
 
     numSearch--;
 }
 
 //runs the function repeatedly with delay
-setInterval(Search, 300)
+setInterval(Search, 100)
 
